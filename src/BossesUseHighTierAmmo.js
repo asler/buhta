@@ -53,8 +53,8 @@ class BUHTA {
     
     //print best ammo
     Object.keys(caliberObj).map(n => {
-      console.log(n);
-      caliberObj[n].map(b => console.log("  " + getName(b + " Name")));
+      logger.info(n);
+      caliberObj[n].map(b => logger.info("  " + getName(b + " Name")));
     });
     
     const ignoreBotTypes = ["assault", "ravangezryachiyevent", "spiritspring", "spiritwinter", "infectedcivil",
@@ -68,7 +68,8 @@ class BUHTA {
     
     const botTypes = Object.keys(db.bots.types).filter(k => !ignoreBotTypes.includes(k))
       .filter(t => {
-        console.log(t,db.bots.types[t].health?.BodyParts)
+        logger.debug(t);
+        logger.debug(db.bots.types[t].health?.BodyParts)
         return db.bots.types[t].health?.BodyParts?.filter(h => h.Chest.max > 101)?.length;
       });
     
@@ -130,7 +131,7 @@ class BUHTA {
       const calibers = Object.keys(ammo);
       calibers.forEach(c => {
         if (!caliberObj[c]) {
-          console.log('not found ammo for ' + c);
+          logger.info('not found ammo for ' + c);
           return;
         }
         ammo[c] = getWeigthAmmoByCount(caliberObj[c], percentHp);
